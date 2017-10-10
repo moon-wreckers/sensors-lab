@@ -1,10 +1,4 @@
-//------------- DC MOTOR VARIABLES -----------------------
-
-#define DC_MOTOR_EN 5
-#define DC_MOTOR_1 6
-#define DC_MOTOR_2 7
-
-//--------------------------------------------------------
+#include "sensorslab.h"
 
 void dcMotorSetup()
 {

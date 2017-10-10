@@ -1,5 +1,4 @@
-
-#define SERVO_PIN  8
+#include "sensorslab.h"
 
 int servo_len_of_period;                     // Microsecond
 int servo_len_of_pulse;                      // Microsecond
