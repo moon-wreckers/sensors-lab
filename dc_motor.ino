@@ -30,17 +30,17 @@ void driveDCMotor()
   
 }
 
-void setup() 
-{
-  pinMode(DC_MOTOR_EN, OUTPUT);
-  pinMode(DC_MOTOR_1, OUTPUT);
-  pinMode(DC_MOTOR_2, OUTPUT);
+/*void setup() */
+/*{*/
+  /*pinMode(DC_MOTOR_EN, OUTPUT);*/
+  /*pinMode(DC_MOTOR_1, OUTPUT);*/
+  /*pinMode(DC_MOTOR_2, OUTPUT);*/
   
-  Serial.begin(9600);
-}
+  /*Serial.begin(9600);*/
+/*}*/
 
-void loop() 
-{
-  driveDCMotor();
-  while(1);
-}
+/*void loop() */
+/*{*/
+  /*driveDCMotor();*/
+  /*while(1);*/
+/*}*/
