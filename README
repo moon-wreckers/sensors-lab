@@ -1,13 +1,39 @@
-The only reason this file exists is so i could have something to commit. 
+						Team[I]:Sensor Labs 
+								MRSD'18
+						Doc. Created: 10 Oct, 2017
+						Last Edited: 10 Oct, 2017		
+Team and Responsibilities:
+	UI - Dan
+	Abdul - DC motor (presume) servo? + Flex sensor
+	Matt - PID control of a DC motor (geared?)
+	David -
+	Karthik - Stepper motor and (not encoder!) check with Yoga
+	
+Clutter 
+- which pins are being utilized for what?
+- Wiring diagram (schematic)?
+-
 
-UI - Dan
-Abdul - DC motor (presume) servo? + Flex sensor
-Matt - PID control of a DC motor (geared?)
-David -
-Karthik - Stepper motor and (not encoder!) check with Yoga
+Assignment Description:
+
+Implementation detials and references:
+Stepper motor driver Detail:
+CAUTION: DO NOT REWIRE while the system (motor/ driver is powered)
+- Pololu  (A4988 stepper motor driver)
+- Allegro’s A4988 DMOS Microstepping Driver with Translator and Overcurrent Protection
+- Been in use since 2009 (LTE)
+- Over current and over temperature protection of the driver module
+- five different micro-stepping resolutions (upto 1/16)
+- Operating range 8V to 35V and upto 1A (w/o heat sink)
+- can control one bi-polar stepper motor 2A o/p current per coil
+- Requires a supply voltage of 3 to 5.5V across VDD and GND
+- 8 to 35V across VMOT and GND
+- supply has to have appropriate decoupling capacitors (close to the board), able to deliver peak current of 4A
+- CAUTION: using power leads longer than a few inches - can cause spikes exceeding the 35V rating 
+- SOLUTION: put a large (at least 47 µF) electrolytic capacitor across (VMOT) and GND close to the board 
+
+Stepper Motor diagram
+https://www.sparkfun.com/datasheets/Robotics/SM-42BYG011-25.pdf
 
 
-
-Clutter - which pins are being utilized for what?
-- Wiring diagram?
-- 
+ 
