@@ -1,44 +1,43 @@
-/*#include "servo_motor.h"*/
 
 #define SERVO_PIN  8
-int lenMicroSecondsOfPeriod = 25 * 1000;
-int lenMicroSecondsOfPulse = 0;
-int lenMicroSecondsOfPulseStart = 0.575 * 1000;
-int lenMicroSecondsOfPulseEnd = 2.350 * 1000;
-int lenMicroSecondsOfPulseStep = 0.01 * 1000;
+
+int servo_len_of_period;                     // Microsecond
+int servo_len_of_pulse;                      // Microsecond
+int servo_len_of_pulse_start;                // Microsecond
+int servo_len_of_pulse_end;                  // Microsecond
+int servo_len_of_pulse_step;                 // Microsecond
 
 
-void servo_motor_setup() {
-  lenMicroSecondsOfPulse = lenMicroSecondsOfPulseStart;
-  }
-
-
-void servo_motor_control() 
+void servoMotorSetup() 
 {
-  while (lenMicroSecondsOfPulse < lenMicroSecondsOfPulseEnd)
+  pinMode(SERVO_PIN, OUTPUT);
+  servo_len_of_period = 25 * 1000;                      // Microsecond
+  servo_len_of_pulse = 0;                               // Microsecond
+  servo_len_of_pulse_start = 0.575 * 1000;              // Microsecond
+  servo_len_of_pulse_end = 2.350 * 1000;                // Microsecond
+  servo_len_of_pulse_step = 0.01 * 1000;                // Microsecond
+}
+
+
+void servoMotorControl() 
+{
+  Serial.println("Starting Servo Motor Test");
+
+  while (servo_len_of_pulse < servo_len_of_pulse_end)
   {
-    // Turn voltage high to start the period and pulse
     digitalWrite(SERVO_PIN, HIGH);
 
-    // Delay for the length of the pulse
-    delayMicroseconds(lenMicroSecondsOfPulse);
+    delayMicroseconds(servo_len_of_pulse);
 
-    // Turn the voltage low for the remainder of the pulse
     digitalWrite(SERVO_PIN, LOW);
 
-    // Delay this loop for the remainder of the period so we don't
-    // send the next signal too soon or too late
-    delayMicroseconds(lenMicroSecondsOfPeriod - lenMicroSecondsOfPulse); 
+    delayMicroseconds(servo_len_of_period - servo_len_of_pulse); 
 
-    // Increment our pulse
-    lenMicroSecondsOfPulse += lenMicroSecondsOfPulseStep;
-    Serial.print("lenMicroSecondsOfPulse: ");
-    Serial.println(lenMicroSecondsOfPulse);
- }
- 
- Serial.println("Done!");
- Serial.println();
- 
- while(1);
+    servo_len_of_pulse += servo_len_of_pulse_step;
 
+    //Serial.print("lenMicroSecondsOfPulse: ");
+    //Serial.println(servo_len_of_pulse);
+  }
+  
+  Serial.println("Done!");
 }

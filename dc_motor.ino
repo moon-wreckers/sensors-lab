@@ -6,7 +6,14 @@
 
 //--------------------------------------------------------
 
-void driveDCMotor()
+void dcMotorSetup()
+{
+  pinMode(DC_MOTOR_EN, OUTPUT);
+  pinMode(DC_MOTOR_1, OUTPUT);
+  pinMode(DC_MOTOR_2, OUTPUT);
+}
+
+void dcMotorControl()
 {
   Serial.println("Starting DC Motor Test");
   
@@ -29,18 +36,3 @@ void driveDCMotor()
   Serial.println("DONE!");
   
 }
-
-/*void setup() */
-/*{*/
-  /*pinMode(DC_MOTOR_EN, OUTPUT);*/
-  /*pinMode(DC_MOTOR_1, OUTPUT);*/
-  /*pinMode(DC_MOTOR_2, OUTPUT);*/
-  
-  /*Serial.begin(9600);*/
-/*}*/
-
-/*void loop() */
-/*{*/
-  /*driveDCMotor();*/
-  /*while(1);*/
-/*}*/

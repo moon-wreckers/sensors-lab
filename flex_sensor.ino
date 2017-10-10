@@ -1,11 +1,11 @@
 
-void flex_sensor_setup() {
+void flexSensorSetup() {
 
 }
 
 
 
-void flex_sensor_control() 
+void flexSensorControl() 
 {
 
 }

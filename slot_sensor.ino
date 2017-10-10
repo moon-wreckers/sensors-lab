@@ -1,10 +1,11 @@
 
-void slot_sensor_setup() {
+void slotSensorSetup() 
+{
 
 }
 
 
-void slot_sensor_control() 
+void slotSensorControl() 
 {
  
 }

@@ -1,9 +1,10 @@
 
-void stepper_motor_setup() {
-  lenMicroSecondsOfPulse = lenMicroSecondsOfPulseStart;
-  }
+void stepperMotorSetup() 
+{
+
+}
 
 
-void stepper_motor_control() 
+void stepperMotorControl() 
 {
 }

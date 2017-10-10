@@ -1,4 +1,4 @@
-void pid_control(){
+void pidControl(){
 
     Serial.print("dicks\n");
 

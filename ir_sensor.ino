@@ -1,8 +1,8 @@
 
-void ir_sensor_setup() {
+void irSensorSetup() {
 }
 
 
-void ir_sensor_control() 
+void irSensorControl() 
 {
 }

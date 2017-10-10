@@ -1,8 +1,8 @@
 
-void rotary_encoder_setup() {
+void rotaryEncoderSetup() {
 }
 
 
-void rotary_encoder_control() 
+void rotaryEncoderControl() 
 {
 }
