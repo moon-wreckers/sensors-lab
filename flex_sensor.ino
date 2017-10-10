@@ -1,4 +1,3 @@
-#define FLEX_SENSOR_PIN A5
 
 void flexSensorSetup() 
 {
