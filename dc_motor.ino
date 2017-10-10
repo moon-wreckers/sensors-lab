@@ -32,11 +32,3 @@ void dcMotorControl(int dc_speed)
   
 }
 
-//-------------------------------------------------
-
-void dcMotorTestFunc()
-{
-  dcMotorControl(DC_SPEED_MEDIUM);
-  dcMotorControl(DC_SPEED_HIGH);
-  
-}
