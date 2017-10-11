@@ -33,6 +33,10 @@
  */
 #define FLEX_SENSOR_PIN A5
 
+/*
+ * Rotary Potentiometer
+ */
+#define ROT_POT_SENSOR_PIN A0
 
 
 
