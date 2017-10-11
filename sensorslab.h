@@ -30,7 +30,7 @@
 /*
  * Light Gate Sensor
  */
-#define SLOT_PIN  9
+#define SLOT_PIN  A1
 
 /*
  * Flex Sensor

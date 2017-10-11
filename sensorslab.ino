@@ -56,7 +56,6 @@ void loop()
   //while(1){
     //slotSensorControl(); 
     //rot_pot_angle = rotPotSensorControl();
-  
   //printEncoderPosition();
 
 }
