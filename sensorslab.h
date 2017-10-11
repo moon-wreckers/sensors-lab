@@ -4,15 +4,19 @@
 
 //--------- COMPONENTS PIN DEFINITIONS ----------
 
+#define BUTTON_PIN 2
+
 /*
  * DC Motor
  */
+#define DC_MOTOR_ENC_A 1
+#define DC_MOTOR_ENC_B 4
+
+
 #define DC_MOTOR_EN 5
 #define DC_MOTOR_1 6
 #define DC_MOTOR_2 7
 
-#define DC_MOTOR_ENC_A 3
-#define DC_MOTOR_ENC_B 4
 
 #define DC_SPEED_LOW 140
 #define DC_SPEED_MEDIUM 198
@@ -39,5 +43,9 @@
 #define ROT_POT_SENSOR_PIN A0
 
 
+typedef enum{
+CLOCKWISE,
+COUNTERCLOCKWISE
+} rot_dir;
 
 #endif

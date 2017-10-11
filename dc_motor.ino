@@ -2,6 +2,7 @@
 
 volatile signed int _encoder_pos = 0;
 
+
 void dcMotorSetup()
 {
   pinMode(DC_MOTOR_EN, OUTPUT);
@@ -11,12 +12,12 @@ void dcMotorSetup()
   pinMode(DC_MOTOR_ENC_A, INPUT);
   pinMode(DC_MOTOR_ENC_B, INPUT);
   
-  attachInterrupt(digitalPinToInterrupt(DC_MOTOR_ENC_A), encoderInterruptCallBack, CHANGE);
-  
+  attachInterrupt(DC_MOTOR_ENC_A, encoderInterruptCallBack, CHANGE);
 }
 
 void encoderInterruptCallBack()
 {
+    Serial.println("motor moved");
   if(digitalRead(DC_MOTOR_ENC_A) == digitalRead(DC_MOTOR_ENC_B))
   {
     _encoder_pos++;
@@ -27,28 +28,40 @@ void encoderInterruptCallBack()
   }
 }
 
-void dcMotorControl(int dc_speed)
-{
-  Serial.println("Starting DC Motor Test");
-  
+
+void dcMotorControl(int dc_speed, rot_dir direction)
+ { 
+  /*clockwise maybe */
+  Serial.println("Writing to motor");
   analogWrite(DC_MOTOR_EN, dc_speed);
+
+  if(direction == CLOCKWISE){
   digitalWrite(DC_MOTOR_1, LOW);
   digitalWrite(DC_MOTOR_2, HIGH);
-  delay(2000);
-  
-  digitalWrite(DC_MOTOR_EN, LOW);
-  delay(500);
-  
-  analogWrite(DC_MOTOR_EN, dc_speed);
+  }
+  else{
   digitalWrite(DC_MOTOR_1, HIGH);
   digitalWrite(DC_MOTOR_2, LOW);
-  delay(2000);
+  }
+
+  /*delay(2000);*/
   
-  analogWrite(DC_MOTOR_EN, LOW);
-  delay(500);
+  /*[>stop<]*/
+  /*digitalWrite(DC_MOTOR_EN, LOW);*/
+  /*delay(500);*/
   
-  Serial.println("DONE!");  
+  /*analogWrite(DC_MOTOR_EN, dc_speed);*/
+  /*delay(2000);*/
+  
+  /*analogWrite(DC_MOTOR_EN, LOW);*/
+  /*delay(500);*/
+  
+  /*Serial.println("DONE!");  */
+
 }
+
+void dcMotorStop()
+{}
 
 unsigned int getEncoderPos()
 {
@@ -63,18 +76,15 @@ void printEncoderPosition()
 
 void dcMotorTestFunc()
 {
-  if(_encoder_pos < 1000)
+  Serial.println("dc motor test");
+  while(_encoder_pos < 1000)
   {
-    analogWrite(DC_MOTOR_EN, DC_SPEED_LOW);
+    Serial.println(_encoder_pos);
+    analogWrite(DC_MOTOR_EN, DC_SPEED_HIGH);
     digitalWrite(DC_MOTOR_1, LOW);
     digitalWrite(DC_MOTOR_2, HIGH);
   }
-  else if(_encoder_pos > 1000)
-  {
     analogWrite(DC_MOTOR_EN, LOW);
-  }
   
   printEncoderPosition();
 }
-
-

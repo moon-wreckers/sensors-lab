@@ -40,3 +40,7 @@ void servoMotorControl()
   
   Serial.println("Done!");
 }
+
+void servoMotorStop() 
+{
+}
