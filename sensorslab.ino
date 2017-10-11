@@ -2,10 +2,28 @@
 
 int rot_pot_angle=0;
 
-byte state =0;
+int state =0;
 int readgate = 0;
 long lastDebounceTime = 0;  // the last time the output pin was toggled
 long debounceDelay = 300;    // the debounce time; increase if the output flickers
+
+int slot_sensor_value =0;
+int rot_pot_value = 0;
+int flex_sensor_value =0;
+int ir_sensor_value =0;
+
+int servo_motor_angle = 0;
+int stepper_motor_output = 0;
+int dc_motor_encoder = 0;
+int dc_motor_voltage = 0;
+
+
+int control=0;
+
+
+
+
+
 
 void setup() 
 {
@@ -36,10 +54,10 @@ void loop()
  
   switch(state){
   case 0: //Servo motor
-    servoMotorControl();
+    servoMotorControl(control);
   break;
   case 1: //Stepper motor
-    stepperMotorControl();
+    stepperMotorControl(control);
   break;
   case 2: //DC motor
     dcMotorTestFunc(); 
@@ -56,12 +74,52 @@ void loop()
   //while(1){
     //slotSensorControl(); 
     //rot_pot_angle = rotPotSensorControl();
+  
   //printEncoderPosition();
 
 }
 
-void sendStateData(){}
-void getDUICommands(){}
+void sendStateData(){
+/*system state*/
+/*pot value */
+/*bendboi*/
+/*infrared*/
+/*slot*/
+/*servo angle*/
+/*stepper step*/
+/*dc*/
+    /*encoder (angle?)*/
+    /*velocity*/
+String output="";
+output+="sb";
+output+=String(state);
+output+="rp";
+output+=String(rot_pot_value);
+output+="bb";
+output+=String(flex_sensor_value);
+output+="ir";
+output+=String(ir_sensor_value);
+output+="ss";
+output+=String(slot_sensor_value);
+output+="sv";
+output+=String(servo_motor_angle);
+output+="st";
+output+=String(stepper_motor_output);
+output+="sv";
+output+=String(servo_motor_angle);
+output+="dc";
+output+=String(dc_motor_encoder);
+output+="dv";
+output+=String(dc_motor_voltage);
+
+Serial.println(output);
+
+
+}
+void getDUICommands(){
+
+
+}
 
 
 void stateButtonInterrupt() {
@@ -74,9 +132,9 @@ void stateButtonInterrupt() {
         Serial.print("State is now: ");
         Serial.println(state);
 
+        control = 0;
         dcMotorStop();
         stepperMotorStop();
-        servoMotorStop();
 
     }  
 }
