@@ -19,15 +19,15 @@ int dc_motor_voltage = 0;
 
 
 int control=0;
-
-
-
-
+int commanded_vel=0;
 
 
 void setup() 
 {
   Serial.begin(9600);
+  Serial.println("Beginning Setup");
+
+
   pinMode(BUTTON_PIN, INPUT);
 
   slotSensorSetup();
@@ -39,12 +39,13 @@ void setup()
   
   attachInterrupt(0, stateButtonInterrupt, RISING);
 
-  delay(5000);
+  delay(3000);
+  Serial.println("Ending Setup");
+  Serial.setTimeout(100);
 }
 
 void loop() 
 {
-  
   // ABDUL MOEED TESTING FUNCTIONS:----------------------------
   //servoMotorControl();
   //dcMotorControl(DC_SPEED_LOW);
@@ -60,9 +61,9 @@ void loop()
     stepperMotorControl(control);
   break;
   case 2: //DC motor
-    dcMotorTestFunc(); 
+    /*dcMotorTestFunc(); */
   /*while(1){*/
-    pidControl();
+    /*pidControl();*/
   /*}*/
   break;
   }
@@ -71,25 +72,39 @@ void loop()
   getDUICommands();
   
   //MATHEW TESTING FUNCTIONS:----------------------------------
-  //while(1){
-    //slotSensorControl(); 
+  //while(1){ slotSensorControl(); 
     //rot_pot_angle = rotPotSensorControl();
   
   //printEncoderPosition();
+  Serial.print("state: ");
+  Serial.println(state);
 
 }
 
+
+void getDUICommands()
+{
+    String inString;
+    if (Serial.available() > 0) {
+        inString = Serial.readString(); 
+    }
+    char command = inString.charAt(0);
+    String data = inString.substring(1); 
+    switch(command){
+    case 's':
+       state = data.toInt();
+    break;
+    case 'a':
+        command = data.toInt();
+    break;
+    case 'v':
+        commanded_vel = data.toInt();
+    break;
+    }
+}
+
 void sendStateData(){
-/*system state*/
-/*pot value */
-/*bendboi*/
-/*infrared*/
-/*slot*/
-/*servo angle*/
-/*stepper step*/
-/*dc*/
-    /*encoder (angle?)*/
-    /*velocity*/
+
 String output="";
 output+="sb";
 output+=String(state);
@@ -112,13 +127,7 @@ output+=String(dc_motor_encoder);
 output+="dv";
 output+=String(dc_motor_voltage);
 
-Serial.println(output);
-
-
-}
-void getDUICommands(){
-
-
+/*Serial.println(output);*/
 }
 
 

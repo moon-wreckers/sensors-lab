@@ -27,21 +27,26 @@
  */
 #define SERVO_PIN 8
 
+
+/*
+ * Rotary Potentiometer
+ */
+#define IR_PIN A0
+
 /*
  * Light Gate Sensor
  */
 #define SLOT_PIN  A1
 
 /*
+ * Rotary Potentiometer
+ */
+#define ROT_POT_SENSOR_PIN A2
+
+/*
  * Flex Sensor
  */
 #define FLEX_SENSOR_PIN A5
-
-/*
- * Rotary Potentiometer
- */
-#define ROT_POT_SENSOR_PIN A0
-
 
 typedef enum{
 CLOCKWISE,

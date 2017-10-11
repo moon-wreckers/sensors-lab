@@ -17,7 +17,7 @@ void dcMotorSetup()
 
 void encoderInterruptCallBack()
 {
-    Serial.println("motor moved");
+    /*Serial.println("motor moved");*/
   if(digitalRead(DC_MOTOR_ENC_A) == digitalRead(DC_MOTOR_ENC_B))
   {
     _encoder_pos++;
