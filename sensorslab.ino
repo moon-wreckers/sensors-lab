@@ -95,7 +95,7 @@ void getDUICommands()
        state = data.toInt();
     break;
     case 'a':
-        command = data.toInt();
+        control = data.toInt();
     break;
     case 'v':
         commanded_vel = data.toInt();

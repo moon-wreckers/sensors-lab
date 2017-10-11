@@ -12,7 +12,8 @@ void servoMotorSetup()
 
 void servoMotorControl(int angle) 
 {
-  myservo.write(angle); // min = 0, max = 180
+  angle = angle % 180;
+  myservo.write(angle); // min = 0, max = 179
   /*myservo.write(90); // min = 0, max = 180*/
   /*delay(2000);*/
   /*myservo.write(0);*/
