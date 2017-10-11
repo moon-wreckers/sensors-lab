@@ -1,3 +1,4 @@
+#include "sensorslab.h"
 
 void setup() 
 {
@@ -5,18 +6,21 @@ void setup()
   slotSensorSetup();
   servoMotorSetup();
   dcMotorSetup();
+  
+  delay(5000);
 }
 
 void loop() 
 {
-  servoMotorControl();
-  dcMotorControl();
   
-  while(1){
-    slotSensorControl(); 
+  // ABDUL MOEED TESTING FUNCTIONS:----------------------------
+  //servoMotorControl();
+  //dcMotorControl(DC_SPEED_LOW);
+  //dcMotorControl(DC_SPEED_HIGH);
   
-  };
+  flexSensorControl();
+  
+  //dcMotorTestFunc(); 
+  //printEncoderPosition();
 
 }
-
-:kjkjj

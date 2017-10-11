@@ -11,6 +11,9 @@
 #define DC_MOTOR_1 6
 #define DC_MOTOR_2 7
 
+#define DC_MOTOR_ENC_A 3
+#define DC_MOTOR_ENC_B 4
+
 #define DC_SPEED_LOW 140
 #define DC_SPEED_MEDIUM 198
 #define DC_SPEED_HIGH 255
