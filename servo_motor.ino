@@ -10,11 +10,11 @@ int servo_len_of_pulse_step;                 // Microsecond
 void servoMotorSetup() 
 {
   pinMode(SERVO_PIN, OUTPUT);
-  servo_len_of_period = 25 * 1000;                      // Microsecond
-  servo_len_of_pulse = 0;                               // Microsecond
-  servo_len_of_pulse_start = 0.575 * 1000;              // Microsecond
-  servo_len_of_pulse_end = 2.350 * 1000;                // Microsecond
-  servo_len_of_pulse_step = 0.01 * 1000;                // Microsecond
+  servo_len_of_period = 2.5 * 1000;                      // Microsecond
+  servo_len_of_pulse = 0;                                // Microsecond
+  servo_len_of_pulse_start = 0.575 * 1000;               // Microsecond
+  servo_len_of_pulse_end = 2.350 * 1000;                 // Microsecond
+  servo_len_of_pulse_step = 0.01 * 1000;                 // Microsecond
 }
 
 
