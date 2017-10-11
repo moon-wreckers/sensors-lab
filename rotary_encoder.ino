@@ -1,8 +1,0 @@
-
-void rotaryEncoderSetup() {
-}
-
-
-void rotaryEncoderControl() 
-{
-}
