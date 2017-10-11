@@ -9,7 +9,8 @@
 /*
  * DC Motor
  */
-#define DC_MOTOR_ENC_A 1
+#define DC_MOTOR_INTERRUPT 1
+#define DC_MOTOR_ENC_A 3
 #define DC_MOTOR_ENC_B 4
 
 

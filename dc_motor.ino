@@ -12,7 +12,7 @@ void dcMotorSetup()
   pinMode(DC_MOTOR_ENC_A, INPUT);
   pinMode(DC_MOTOR_ENC_B, INPUT);
   
-  attachInterrupt(DC_MOTOR_ENC_A, encoderInterruptCallBack, CHANGE);
+  attachInterrupt(DC_MOTOR_INTERRUPT, encoderInterruptCallBack, CHANGE);
 }
 
 void encoderInterruptCallBack()
@@ -77,14 +77,15 @@ void printEncoderPosition()
 void dcMotorTestFunc()
 {
   Serial.println("dc motor test");
-  while(_encoder_pos < 1000)
+  if(_encoder_pos < 1000)
   {
-    Serial.println(_encoder_pos);
     analogWrite(DC_MOTOR_EN, DC_SPEED_HIGH);
     digitalWrite(DC_MOTOR_1, LOW);
     digitalWrite(DC_MOTOR_2, HIGH);
   }
+  else{
     analogWrite(DC_MOTOR_EN, LOW);
+    }
   
   printEncoderPosition();
 }

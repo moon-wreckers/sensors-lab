@@ -61,7 +61,7 @@ void loop()
     stepperMotorControl(control);
   break;
   case 2: //DC motor
-    /*dcMotorTestFunc(); */
+    dcMotorTestFunc(); 
   /*while(1){*/
     /*pidControl();*/
   /*}*/
@@ -95,7 +95,7 @@ void getDUICommands()
        state = data.toInt();
     break;
     case 'a':
-        command = data.toInt();
+        control = data.toInt();
     break;
     case 'v':
         commanded_vel = data.toInt();
