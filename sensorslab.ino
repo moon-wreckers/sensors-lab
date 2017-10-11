@@ -29,7 +29,7 @@ void loop()
     //slotSensorControl(); 
     //rot_pot_angle = rotPotSensorControl();
   
-  //dcMotorTestFunc(); 
+  dcMotorTestFunc(); 
   //printEncoderPosition();
 
 }
