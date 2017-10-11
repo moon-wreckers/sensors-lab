@@ -1,0 +1,3 @@
+[submodule "sensorslabDUI"]
+	path = sensorslabDUI
+	url = https://github.com/moon-wreckers/sensorslabDUI.git

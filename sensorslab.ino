@@ -33,6 +33,7 @@ void setup()
   slotSensorSetup();
   rotPotSensorSetup();
   servoMotorSetup();
+  stepperMotorsetup();
   dcMotorSetup();
 
   /*setDesiredPosition(720);*/
@@ -59,11 +60,12 @@ void loop()
   break;
   case 1: //Stepper motor
     stepperMotorControl(control);
+    control = 0;
   break;
   case 2: //DC motor
     dcMotorTestFunc(); 
   /*while(1){*/
-    /*pidControl();*/
+    /*pidControl();*/ 
   /*}*/
   break;
   }
