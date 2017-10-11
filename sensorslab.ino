@@ -15,28 +15,21 @@ void setup()
 
 void loop() 
 {
-<<<<<<< HEAD
   
   // ABDUL MOEED TESTING FUNCTIONS:----------------------------
   //servoMotorControl();
   //dcMotorControl(DC_SPEED_LOW);
   //dcMotorControl(DC_SPEED_HIGH);
   
-  flexSensorControl();
-=======
-  servoMotorControl();
-  dcMotorControl(0);
+  //flexSensorControl();
   
-  while(1){
-    slotSensorControl(); 
-    rot_pot_angle = rotPotSensorControl();
->>>>>>> ad5f08bc4641c563e6e91b19bdd9fa7a360ff1a0
+  
+  //MATHEW TESTING FUNCTIONS:----------------------------------
+  //while(1){
+    //slotSensorControl(); 
+    //rot_pot_angle = rotPotSensorControl();
   
   //dcMotorTestFunc(); 
   //printEncoderPosition();
 
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> ad5f08bc4641c563e6e91b19bdd9fa7a360ff1a0
