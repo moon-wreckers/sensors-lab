@@ -63,9 +63,10 @@ void loop()
     control = 0;
   break;
   case 2: //DC motor
-    dcMotorTestFunc(); 
+    /*dcMotorTestFunc(); */
   /*while(1){*/
-    /*pidControl();*/ 
+  /*setDesiredPosition(control);*/
+    dcMotorControl(control); 
   /*}*/
   break;
   }
@@ -77,10 +78,11 @@ void loop()
   //while(1){ slotSensorControl(); 
     //rot_pot_angle = rotPotSensorControl();
   
+  int reading = digitalRead(BUTTON_PIN);
+  if (reading == 0){ readgate =0;}
   //printEncoderPosition();
-  Serial.print("state: ");
-  Serial.println(state);
-
+  /*Serial.print("state: ");*/
+  /*Serial.println(state);*/
 }
 
 
@@ -94,10 +96,14 @@ void getDUICommands()
     String data = inString.substring(1); 
     switch(command){
     case 's':
-       state = data.toInt();
+       changeState(data.toInt());
+        Serial.print("state: ");
+        Serial.println(state);
     break;
     case 'a':
         control = data.toInt();
+         Serial.print("control: ");
+         Serial.println(control);
     break;
     case 'v':
         commanded_vel = data.toInt();
@@ -132,6 +138,12 @@ output+=String(dc_motor_voltage);
 /*Serial.println(output);*/
 }
 
+void changeState(int s)
+{
+    state = s;
+    control = 0;
+    dcMotorStop();
+}
 
 void stateButtonInterrupt() {
 
@@ -139,13 +151,9 @@ void stateButtonInterrupt() {
         lastDebounceTime = millis();
         readgate=1;
 
-        state = (state+1)%3;
-        Serial.print("State is now: ");
-        Serial.println(state);
-
-        control = 0;
-        dcMotorStop();
-        stepperMotorStop();
+        changeState((state+1)%3);
+        /*Serial.print("State is now: ");*/
+        /*Serial.println(state);*/
 
     }  
 }
