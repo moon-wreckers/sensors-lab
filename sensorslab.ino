@@ -1,14 +1,13 @@
 #include "sensorslab.h"
 
-int rot_pot_angle=0;
 
 int state =0;
 int readgate = 0;
 long lastDebounceTime = 0;  // the last time the output pin was toggled
 long debounceDelay = 300;    // the debounce time; increase if the output flickers
 
+int rot_pot_angle=0;
 int slot_sensor_value =0;
-int rot_pot_value = 0;
 int flex_sensor_value =0;
 int ir_sensor_value =0;
 
@@ -133,7 +132,7 @@ String output="";
 output+="sb";
 output+=String(state);
 output+="rp";
-output+=String(rot_pot_value);
+output+=String(rot_pot_angle);
 output+="bb";
 output+=String(flex_sensor_value);
 output+="ir";

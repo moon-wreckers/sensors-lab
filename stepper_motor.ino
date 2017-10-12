@@ -10,12 +10,15 @@ void stepperMotorsetup() {
   pinMode(enblPin, OUTPUT);
 }
 
-void stepperMotorControl(int counts) {
+void stepperMotorControl(int angle) {
   // 3200 steps/counts - make one rotation 
   // Enables the motor to move in the given direction
-  position+=counts;
+  angle = angle%360;
+  int counts= map(angle, -360, 360, -3200, 3200);
+  position+=angle;
   
   if(counts >= 0){
+
     digitalWrite(dirPin, HIGH);
   }
   else if (counts < 0){
