@@ -7,8 +7,9 @@ void slotSensorSetup()
 
 //--------------------------------------------------------
 
-void slotSensorControl() 
+int slotSensorControl() 
 {
   int sensor_val = analogRead(SLOT_PIN);
-  Serial.println(sensor_val);
+  /*Serial.println(sensor_val);*/
+  return sensor_val;
 }

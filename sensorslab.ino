@@ -49,12 +49,10 @@ void setup()
 void loop() 
 {
   // ABDUL MOEED TESTING FUNCTIONS:----------------------------
-  //servoMotorControl();
-  //dcMotorControl(DC_SPEED_LOW);
-  //dcMotorControl(DC_SPEED_HIGH);
-  
-  //flexSensorControl();
+    flex_sensor_value = flexSensorControl();
    rot_pot_angle = rotPotSensorControl();
+   ir_sensor_value = irSensorControl();
+   slot_sensor_value = slotSensorControl();
 
    if(rot_pot_control){
     Serial.println(rot_pot_angle);
@@ -70,25 +68,20 @@ void loop()
     angle = 0;
   break;
   case 2: //DC motor
-    /*dcMotorTestFunc(); */
-  /*while(1){*/
-  /*setDesiredPosition(control);*/
+  if (commanded_vel)
+    dcSpeedControl(angle);
+  else
     dcMotorControl(angle); 
-  /*}*/
   break;
   }
     
   sendStateData();
   getDUICommands();
   
-  //MATHEW TESTING FUNCTIONS:----------------------------------
-  //while(1){ slotSensorControl(); 
   
   int reading = digitalRead(BUTTON_PIN);
   if (reading == 0){ readgate =0;}
-  //printEncoderPosition();
-  /*Serial.print("state: ");*/
-  /*Serial.println(state);*/
+
 }
 
 
@@ -153,6 +146,7 @@ void changeState(int s)
 {
     state = s;
     angle = 0;
+    commanded_vel = 0;
     dcMotorStop();
 }
 

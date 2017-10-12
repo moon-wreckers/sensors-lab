@@ -8,18 +8,15 @@ unsigned long lastTick;
 int desired;
 /*unsigned int current;*/
 bool drive_vel, drive_position;
-unsigned long last_time;
 
 const double k_p = .26;
 const double k_i = 0.1;
 const double k_d = 0.6;
 
-long current_time = 0;
 long current_encoder_pos;
 long last_time = 0;
+long last_vel_time = 0;
 long last_encoder_pos;
-
-
 
 void dcMotorSetup()
 {
@@ -153,15 +150,15 @@ void dcMotorTestFunc()
 
 void dcSpeedControl(int desired_vel)
 {
-  current_time = millis();
+  unsigned long current_time = millis();
   current_encoder_pos = _encoder_pos;
   
-  timestep = current_time - last_time;
-  distance = current_encoder_pos - last_encoder_pos;
+  unsigned long timestep = current_time - last_vel_time;
+  int distance = current_encoder_pos - last_encoder_pos;
   
   double current_vel = (distance * 1000) / timestep;  // degrees/second
   
-  last_time = millis();
+  last_vel_time = millis();
   last_encoder_pos = _encoder_pos;
   
   int voltage = 140;
