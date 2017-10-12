@@ -2,8 +2,8 @@
 
 volatile signed int _encoder_pos = 0;
 bool motor_on = false;
-
 double err_p, err_i, err_d, err_last, pos_last, pos_cur = 0;
+double swin_acc_err = 0;
 unsigned long pid_time_last, pid_time_cur = 0;
 unsigned long lastTick;
 double current_vel =0;
@@ -49,57 +49,57 @@ void encoderInterruptCallBack()
 }
 
 void dcMotorControl(int desired) {
-  /*Serial.println("pid control loop");*/
-  pid_time_last = pid_time_cur;
-  pid_time_cur = millis();
-  //unsigned long time = millis();
-  //unsigned long timestep = time - last_time;
-  err_p = desired - _encoder_pos;
-  
-  pos_last = pos_cur;
-  pos_cur = _encoder_pos;
+  const double decay_rate = 0.0075;
 
-  /*Serial.println(err_p);*/
-  //if (abs(err_p) > 5) {
-    err_i += err_p;
-    //err_d += (err_p - err_last) / timestep;+
-    err_d = (pos_cur - pos_last) * 1000 / (pid_time_cur - pid_time_last);
+  swin_acc_err = abs(_encoder_pos - desired) * decay_rate + swin_acc_err * (1.0 - decay_rate);
+  //Serial.print("dc");
+  //Serial.println(_encoder_pos); 
+  if (swin_acc_err > 6)
+  {
+    while (swin_acc_err > 5)
+    {
+      swin_acc_err = abs(_encoder_pos - desired) * decay_rate + swin_acc_err * (1.0 - decay_rate);
+      Serial.print("dc");
+      Serial.println(_encoder_pos);
 
-    double output = err_p * k_p + err_i * k_i + err_d * k_d;
+      pid_time_last = pid_time_cur;
+      pid_time_cur = millis();
+      err_last = err_p;
+      err_p = desired - _encoder_pos;
+      
+      pos_last = pos_cur;
+      pos_cur = _encoder_pos;
 
-    rot_dir direction = err_p < abs(err_p) ? COUNTERCLOCKWISE : CLOCKWISE;
-    output = abs(output);
-    output += output_offset;
-    output = min(output, 210);
-    /*output = output %1000;*/
-    /*output = map*/
-    /*
-    Serial.print("pos: ");
-    Serial.print(_encoder_pos);
-    Serial.print(" err_p: ");
-    Serial.print(err_p * k_p);
-    Serial.print(" err_i: ");
-    Serial.print(err_i * k_i);
-    Serial.print(" err_d: ");
-    Serial.print(err_d * k_d);
-    Serial.print(" pid output: ");
-    Serial.print((int)output);
-    Serial.print(" direction: ");
-    Serial.println(direction);
-    */
-    //Serial.println("pos: %d, err_p: %.2f, err_i: %.2f, err_d: %.2f, output: %d / %d", 
-    //  _encoder_pos, err_p, err_i, err_d, (int)output, desired);
+      err_i += err_p;
+      err_d = (pos_cur - pos_last) * 1000 / (pid_time_cur - pid_time_last);
 
-    dcMotorDrive((int)output, direction);
-    err_last = err_p;
-    //last_time = time;
-  //}
-  //else if (motor_on)
-  //{
-  //  Serial.print("pos: ");
-  //  Serial.println(_encoder_pos);
-  //  dcMotorStop();
-  //}
+      double output = err_p * k_p + err_i * k_i + err_d * k_d;
+
+      rot_dir direction = err_p < abs(err_p) ? COUNTERCLOCKWISE : CLOCKWISE;
+      output = abs(output);
+      output += output_offset;
+      output = min(output, 210);
+
+      /*
+      Serial.print("pos: ");
+      Serial.print(_encoder_pos);
+      Serial.print(" err_p: ");
+      Serial.print(err_p * k_p);
+      Serial.print(" err_i: ");
+      Serial.print(err_i * k_i);
+      Serial.print(" err_d: ");
+      Serial.print(err_d * k_d);
+      Serial.print(" pid output: ");
+      Serial.print((int)output);
+      Serial.print(" direction: ");
+      Serial.println(direction);
+      */
+      
+      dcMotorDrive((int)output, direction);
+    }
+
+    dcMotorStop();
+  }
 }
 
 void dcMotorDrive(int dc_speed, rot_dir direction)
