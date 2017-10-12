@@ -22,7 +22,7 @@ int angle=0;
 int rot_pot_control=0;
 int commanded_vel=0;
 
-long interval = 1000L;
+long interval = 100L;
 long prevTime;
 long currentTime;
 
