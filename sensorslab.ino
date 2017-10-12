@@ -22,9 +22,15 @@ int angle=0;
 int rot_pot_control=0;
 int commanded_vel=0;
 
+long interval = 1000L;
+long prevTime;
+long currentTime;
+
 
 void setup() 
 {
+  currentTime = millis();
+  prevTime = currentTime;
   Serial.begin(9600);
   Serial.println("Beginning Setup");
 
@@ -132,15 +138,16 @@ output+=String(slot_sensor_value);
 output+="sv";
 output+=String(servo_motor_angle);
 output+="st";
-output+=String(stepper_motor_output);
-output+="sv";
 output+=String(servo_motor_angle);
 output+="dc";
 output+=String(dc_motor_encoder);
 output+="dv";
 output+=String(dc_motor_voltage);
-
-/*Serial.println(output);*/
+currentTime = millis();
+if (currentTime - prevTime > interval) {
+  Serial.println(output);
+  prevTime = millis();
+}
 }
 
 void changeState(int s)
