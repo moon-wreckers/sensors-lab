@@ -11,7 +11,7 @@ bool drive_vel, drive_position;
 
 const double k_p = .26;
 const double k_i = 0.1;
-const double k_d = 0.6;
+const double k_d = -80;
 
 long current_encoder_pos;
 long last_time = 0;
@@ -162,11 +162,19 @@ void dcSpeedControl(int desired_vel)
   last_encoder_pos = _encoder_pos;
   
   int voltage = 140;
+
   
   if(current_vel - desired_vel > 3)
     voltage--;
   else if(current_vel - desired_vel < 3)
     voltage++;
+
+    Serial.print("Current vel");
+    Serial.println(current_vel);
+    Serial.print("desired_vel");
+    Serial.println(desired_vel);
+    Serial.print("Setting volgate to: ");
+    Serial.println(voltage);
   
   rot_dir direction_ = (desired_vel<abs(desired_vel))? CLOCKWISE : COUNTERCLOCKWISE;
   dcMotorDrive((int)voltage, direction_);

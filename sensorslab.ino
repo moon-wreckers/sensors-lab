@@ -109,6 +109,7 @@ void getDUICommands()
     break;
     case 'p':
         rot_pot_control = data.toInt();
+        commanded_vel = 0;
          Serial.print("rot_pot_control: ");
          Serial.println(rot_pot_control);
     break;

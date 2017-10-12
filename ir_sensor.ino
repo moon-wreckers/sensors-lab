@@ -5,14 +5,11 @@
 SharpIR SharpIR(IR_PIN, model);
 
 void irSensorSetup() {
-    Serial.begin(9600);
 }
 
 
 int irSensorControl() 
 {
-    delay(2000);   
-
   unsigned long pepe1=millis();  // takes the time before the loop on the library begins
 
   int dis=SharpIR.distance();  // this returns the distance to the object you're measuring
