@@ -1,12 +1,12 @@
 						Team[I]:Sensor Labs 
 								MRSD'18
 						Doc. Created: 10 Oct, 2017
-						Last Edited: 10 Oct, 2017		
+						Last Edited: 12 Oct, 2017		
 Team and Responsibilities:
 	UI - Dan
 	Abdul - DC motor (presume) + Flex sensor
 	Matt - PID control of a DC motor (geared?)
-	David - Servo + Slot Sensor
+	David - Servo + Slot Sensor + DC Motor
 	Karthik - Stepper motor and (not encoder!) check with Yoga
 	
 Clutter 
