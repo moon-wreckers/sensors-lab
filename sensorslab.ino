@@ -15,7 +15,7 @@ int ir_sensor_value =0;
 int servo_motor_angle = 0;
 int stepper_motor_output = 0;
 int dc_motor_encoder = 0;
-int dc_motor_voltage = 0;
+int dc_motor_speed = 0;
 
 
 int angle=0;
@@ -55,10 +55,15 @@ void setup()
 void loop() 
 {
   // ABDUL MOEED TESTING FUNCTIONS:----------------------------
-    flex_sensor_value = flexSensorControl();
+   flex_sensor_value = flexSensorControl();
    rot_pot_angle = rotPotSensorControl();
    ir_sensor_value = irSensorControl();
    slot_sensor_value = slotSensorControl();
+
+   dc_motor_encoder = getEncoderPos();
+   dc_motor_speed = getDCVelocity();
+   servo_motor_angle = getServoAngle();
+   stepper_motor_output = getStepperPos();
 
    if(rot_pot_control){
     Serial.println(rot_pot_angle);
@@ -142,7 +147,7 @@ output+=String(stepper_motor_output);
 output+="dc";
 output+=String(dc_motor_encoder);
 output+="dv";
-output+=String(dc_motor_voltage);
+output+=String(dc_motor_speed);
 currentTime = millis();
 if (currentTime - prevTime > interval) {
   Serial.println(output);

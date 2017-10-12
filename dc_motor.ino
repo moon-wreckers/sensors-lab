@@ -6,6 +6,7 @@ bool motor_on = false;
 double err_p, err_i, err_d, err_last, pos_last, pos_cur = 0;
 unsigned long pid_time_last, pid_time_cur = 0;
 unsigned long lastTick;
+double current_vel =0;
 int desired;
 /*unsigned int current;*/
 bool drive_vel, drive_position;
@@ -136,6 +137,11 @@ unsigned int getEncoderPos()
   return _encoder_pos;
 }
 
+unsigned int getDCVelocity()
+{
+  return current_vel;
+}
+
 void printEncoderPosition()
 {
   Serial.print("Encoder Position: ");
@@ -165,7 +171,7 @@ void dcSpeedControl(int desired_vel)
   cur_vel_time = millis();
   current_encoder_pos = _encoder_pos;
 
-  double current_vel = (current_encoder_pos - last_encoder_pos) * 1000 / (cur_vel_time - last_vel_time);  // degrees/second
+  current_vel = (current_encoder_pos - last_encoder_pos) * 1000 / (cur_vel_time - last_vel_time);  // degrees/second
 
   if (abs(current_vel) - abs(desired_vel) > 3)
     dc_ctrl_output--;
