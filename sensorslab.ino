@@ -37,6 +37,7 @@ void setup()
   pinMode(BUTTON_PIN, INPUT);
 
   slotSensorSetup();
+  flexSensorSetup();
   rotPotSensorSetup();
   servoMotorSetup();
   stepperMotorsetup();
@@ -149,7 +150,7 @@ output+="dv";
 output+=String(dc_motor_speed);
 currentTime = millis();
 if (currentTime - prevTime > interval) {
-  Serial.println(output);
+  /*Serial.println(output);*/
   prevTime = millis();
 }
 }
@@ -169,6 +170,7 @@ void stateButtonInterrupt() {
         readgate=1;
 
         changeState((state+1)%3);
+        dcMotorStop();
         /*Serial.print("State is now: ");*/
         /*Serial.println(state);*/
 

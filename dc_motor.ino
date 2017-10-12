@@ -12,15 +12,15 @@ int desired;
 bool drive_vel, drive_position;
 
 const double k_p = 1.0;
-const double k_i = 0.01;
-const double k_d = 0.02;
+const double k_i = 0.005;
+const double k_d = 0.2;
 const int output_offset = 100;
 
 long current_encoder_pos = 0;
 long last_time = 0;
 long last_vel_time, cur_vel_time = 0;
 long last_encoder_pos = 0;
-int dc_ctrl_output = 140;
+int dc_ctrl_output = 0;
 
 void dcMotorSetup()
 {
@@ -59,10 +59,11 @@ void dcMotorControl(int desired) {
   pos_last = pos_cur;
   pos_cur = _encoder_pos;
 
-  /*Serial.println(err_p);*/
-  //if (abs(err_p) > 5) {
-    err_i += err_p;
-    //err_d += (err_p - err_last) / timestep;+
+  Serial.println(err_p);
+  while (abs(err_p) > 3 && millis()-pid_time_cur<1000) {
+    err_p = desired - _encoder_pos;
+    err_i = err_p;
+    //err_d  erl+= (err_p - err_last) / timestep;+
     err_d = (pos_cur - pos_last) * 1000 / (pid_time_cur - pid_time_last);
 
     double output = err_p * k_p + err_i * k_i + err_d * k_d;
@@ -73,7 +74,7 @@ void dcMotorControl(int desired) {
     output = min(output, 210);
     /*output = output %1000;*/
     /*output = map*/
-    /*
+  /* 
     Serial.print("pos: ");
     Serial.print(_encoder_pos);
     Serial.print(" err_p: ");
@@ -87,19 +88,21 @@ void dcMotorControl(int desired) {
     Serial.print(" direction: ");
     Serial.println(direction);
     */
-    //Serial.println("pos: %d, err_p: %.2f, err_i: %.2f, err_d: %.2f, output: %d / %d", 
-    //  _encoder_pos, err_p, err_i, err_d, (int)output, desired);
+    
+    /*Serial.println("pos: %d, err_p: %.2f, err_i: %.2f, err_d: %.2f, output: %d / %d", */
+      /*_encoder_pos, err_p, err_i, err_d, (int)output, desired);*/
 
     dcMotorDrive((int)output, direction);
     err_last = err_p;
     //last_time = time;
-  //}
-  //else if (motor_on)
-  //{
-  //  Serial.print("pos: ");
-  //  Serial.println(_encoder_pos);
-  //  dcMotorStop();
-  //}
+  }
+  if (motor_on)
+  {
+    Serial.print("pos: ");
+    Serial.println(_encoder_pos);
+    Serial.println("stopping dc motor");
+    dcMotorStop();
+  }
 }
 
 void dcMotorDrive(int dc_speed, rot_dir direction)
@@ -123,7 +126,6 @@ void dcMotorDrive(int dc_speed, rot_dir direction)
 void dcMotorStop()
 {
   motor_on = false;
-  Serial.println("stopping dc motor");
   analogWrite(DC_MOTOR_EN, LOW);
   /*_encoder_pos = 0;*/
   /*_encoder_pos = 0;*/
@@ -166,17 +168,30 @@ void dcMotorTestFunc()
 
 void dcSpeedControl(int desired_vel)
 {
-  last_vel_time = cur_vel_time;
   last_encoder_pos = current_encoder_pos;
   cur_vel_time = millis();
   current_encoder_pos = _encoder_pos;
+  double timediff = (cur_vel_time- last_vel_time)/1000.0;
+  /*Serial.print("timediff: ");*/
+  /*Serial.println(timediff);*/
 
-  current_vel = (current_encoder_pos - last_encoder_pos) * 1000 / (cur_vel_time - last_vel_time);  // degrees/second
+  current_vel = (current_encoder_pos - last_encoder_pos) / (timediff);  // degrees/second
 
-  if (abs(current_vel) - abs(desired_vel) > 3)
-    dc_ctrl_output--;
-  else if (abs(current_vel) - abs(desired_vel) < -3)
-    dc_ctrl_output++;
+  if (abs(current_vel- desired_vel) > 3)
+    dc_ctrl_output-=(current_vel-desired_vel)/4;
+
+  
+  dc_ctrl_output=abs(dc_ctrl_output);
+
+  Serial.print("desired : ");
+  Serial.print(desired_vel);
+  Serial.print("  current_vel: ");
+  Serial.print(current_vel);
+  Serial.print("  dc_ctrl_output: ");
+  Serial.println(dc_ctrl_output);
+
+  /*else if (abs(current_vel) - abs(desired_vel) < -3)*/
+    /*dc_ctrl_output+=desired_vel-current_vel;*/
 
   /*
   Serial.print("Current vel: ");
@@ -187,6 +202,7 @@ void dcSpeedControl(int desired_vel)
   Serial.println(dc_ctrl_output);
   */
 
-  rot_dir direction_ = (desired_vel < abs(desired_vel)) ? CLOCKWISE : COUNTERCLOCKWISE;
+  last_vel_time = cur_vel_time;
+  rot_dir direction_ = (desired_vel < abs(desired_vel)) ? COUNTERCLOCKWISE : CLOCKWISE;
   dcMotorDrive((int)dc_ctrl_output, direction_);
 }
