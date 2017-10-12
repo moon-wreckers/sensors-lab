@@ -18,7 +18,8 @@ int dc_motor_encoder = 0;
 int dc_motor_voltage = 0;
 
 
-int control=0;
+int angle=0;
+int rot_pot_control=0;
 int commanded_vel=0;
 
 
@@ -40,7 +41,7 @@ void setup()
   
   attachInterrupt(0, stateButtonInterrupt, RISING);
 
-  delay(3000);
+  /*delay(3000);*/
   Serial.println("Ending Setup");
   Serial.setTimeout(100);
 }
@@ -53,20 +54,26 @@ void loop()
   //dcMotorControl(DC_SPEED_HIGH);
   
   //flexSensorControl();
- 
+   rot_pot_angle = rotPotSensorControl();
+
+   if(rot_pot_control){
+    Serial.println(rot_pot_angle);
+       angle = rot_pot_angle;
+   }
+
   switch(state){
   case 0: //Servo motor
-    servoMotorControl(control);
+    servoMotorControl(angle);
   break;
   case 1: //Stepper motor
-    stepperMotorControl(control);
-    control = 0;
+    stepperMotorControl(angle);
+    angle = 0;
   break;
   case 2: //DC motor
     /*dcMotorTestFunc(); */
   /*while(1){*/
   /*setDesiredPosition(control);*/
-    dcMotorControl(control); 
+    dcMotorControl(angle); 
   /*}*/
   break;
   }
@@ -76,7 +83,6 @@ void loop()
   
   //MATHEW TESTING FUNCTIONS:----------------------------------
   //while(1){ slotSensorControl(); 
-    //rot_pot_angle = rotPotSensorControl();
   
   int reading = digitalRead(BUTTON_PIN);
   if (reading == 0){ readgate =0;}
@@ -101,12 +107,17 @@ void getDUICommands()
         Serial.println(state);
     break;
     case 'a':
-        control = data.toInt();
-         Serial.print("control: ");
-         Serial.println(control);
+        angle = data.toInt();
+         Serial.print("angle: ");
+         Serial.println(angle);
     break;
     case 'v':
         commanded_vel = data.toInt();
+    break;
+    case 'p':
+        rot_pot_control = data.toInt();
+         Serial.print("rot_pot_control: ");
+         Serial.println(rot_pot_control);
     break;
     }
 }
@@ -141,7 +152,7 @@ output+=String(dc_motor_voltage);
 void changeState(int s)
 {
     state = s;
-    control = 0;
+    angle = 0;
     dcMotorStop();
 }
 
