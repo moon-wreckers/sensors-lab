@@ -13,7 +13,7 @@ void stepperMotorsetup() {
 void stepperMotorControl(int angle) {
   // 3200 steps/counts - make one rotation 
   // Enables the motor to move in the given direction
-  angle = angle%360;
+//  angle = angle%360;
   int counts= map(angle, -360, 360, -3200, 3200);
   position+=angle;
   
